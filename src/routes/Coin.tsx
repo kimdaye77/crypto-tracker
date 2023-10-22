@@ -1,11 +1,5 @@
 import { useParams } from "react-router";
-import {
-  Link,
-  Route,
-  Switch,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
+import { Link, Route, Routes, useLocation, useMatch } from "react-router-dom";
 import { styled } from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
@@ -78,13 +72,6 @@ const Tab = styled.span<{ isActive: boolean }>`
     display: block;
   }
 `;
-interface RouteParams {
-  coinId: string;
-}
-
-interface RouteState {
-  name: string;
-}
 
 interface InfoData {
   id: string;
@@ -144,17 +131,17 @@ interface PriceData {
 interface ICoinProps {}
 
 function Coin({}: ICoinProps) {
-  const { coinId } = useParams<RouteParams>();
-  const { state } = useLocation<RouteState>();
-  const priceMatch = useRouteMatch("/:coinId/price");
-  const chartMatch = useRouteMatch("/:coinId/chart");
+  const { coinId } = useParams();
+  const { state } = useLocation();
+  const priceMatch = useMatch("/:coinId/price");
+  const chartMatch = useMatch("/:coinId/chart");
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
-    () => fetchCoinInfo(coinId)
+    () => fetchCoinInfo(coinId!)
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId),
+    () => fetchCoinTickers(coinId!),
     {
       refetchInterval: 5000,
     }
@@ -210,14 +197,13 @@ function Coin({}: ICoinProps) {
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-          <Switch>
-            <Route path={`/${coinId}/price`}>
-              <Price />
-            </Route>
-            <Route path={`/${coinId}/chart`}>
-              <Chart coinId={coinId} />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path={`/${coinId}/price`} element={<Price />} />
+            <Route
+              path={`/${coinId}/chart`}
+              element={<Chart coinId={coinId!} />}
+            />
+          </Routes>
         </>
       )}
     </Container>
