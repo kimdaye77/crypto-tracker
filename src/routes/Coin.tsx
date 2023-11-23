@@ -16,11 +16,18 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 const Title = styled.h1`
   font-size: 48px;
   color: ${(props) => props.theme.accentColor};
+`;
+
+const HomeBtn = styled.button`
+  margin: 4px 0;
+  font-size: 15px;
+  padding: 4px 0px;
 `;
 
 const Loader = styled.span`
@@ -156,6 +163,9 @@ function Coin({}: ICoinProps) {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
+        <HomeBtn>
+          <Link to="/">Home</Link>
+        </HomeBtn>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
