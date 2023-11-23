@@ -1,8 +1,6 @@
 import { useParams } from "react-router";
-import { Link, Route, Routes, useLocation, useMatch } from "react-router-dom";
+import { Link, Outlet, useLocation, useMatch } from "react-router-dom";
 import { styled } from "styled-components";
-import Price from "./Price";
-import Chart from "./Chart";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
@@ -191,19 +189,13 @@ function Coin({}: ICoinProps) {
 
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to="chart">Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to="price">Price</Link>
             </Tab>
           </Tabs>
-          <Routes>
-            <Route path={`/${coinId}/price`} element={<Price />} />
-            <Route
-              path={`/${coinId}/chart`}
-              element={<Chart coinId={coinId!} />}
-            />
-          </Routes>
+          <Outlet />
         </>
       )}
     </Container>
