@@ -28,19 +28,23 @@ function Chart() {
       refetchInterval: 10000,
     }
   );
+
+  const exceptData = data ?? [];
+  const chartData = exceptData?.map((data) => {
+    return {
+      x: data.time_close,
+      y: [data.open, data.high, data.low, data.close],
+    };
+  });
+
   return (
     <div>
       {isLoading ? (
         "Loading chart..."
       ) : (
         <ApexChart
-          type="line"
-          series={[
-            {
-              name: "Price",
-              data: data?.map((price) => Number(price.close)) as number[],
-            },
-          ]}
+          type="candlestick"
+          series={[{ data: chartData }]}
           options={{
             theme: { mode: isDark ? "dark" : "light" },
             chart: {
@@ -57,15 +61,7 @@ function Chart() {
               axisBorder: { show: false },
               labels: { show: false },
               type: "datetime",
-              categories: data?.map((price) =>
-                new Date(Number(price.time_close) * 1000).toUTCString()
-              ),
             },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-            },
-            colors: ["#0fbcf9"],
             tooltip: {
               y: {
                 formatter: (value) => `$${value.toFixed(2)}`,

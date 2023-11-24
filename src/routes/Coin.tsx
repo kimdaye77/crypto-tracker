@@ -62,7 +62,9 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: ${(props) => props.theme.boxColor};
+  background-color: ${(props) =>
+    props.isActive ? props.theme.textColor : props.theme.boxColor};
+
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
