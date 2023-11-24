@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 0px 10px;
   max-width: 480px;
   margin: 0 auto;
 `;

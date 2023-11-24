@@ -6,7 +6,7 @@ import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 0px 10px;
   max-width: 480px;
   margin: 0 auto;
 `;
@@ -33,6 +33,7 @@ const Overview = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${(props) => props.theme.boxColor};
+  margin-top: 20px;
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -41,6 +42,7 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-weight: 500;
   span:first-child {
     font-size: 10px;
     font-weight: 400;
@@ -51,8 +53,8 @@ const OverviewItem = styled.div`
 const Description = styled.p`
   margin: 20px 0px;
   font-weight: 500;
-  white-space: nowrap;
-  &:first-letter {
+  white-space: pre-wrap;
+  &::first-letter {
     font-size: 28px;
     font-weight: 800;
   }
@@ -82,7 +84,7 @@ const Tab = styled.span<{ isActive: boolean }>`
     display: block;
   }
 `;
-const Column = styled.div`
+const Row = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
@@ -181,10 +183,10 @@ function Coin({}: ICoinProps) {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Column>
+          <Row>
             <Rank>{infoData?.rank}</Rank>
             <Description>{infoData?.description}</Description>
-          </Column>
+          </Row>
 
           <Overview>
             <OverviewItem>

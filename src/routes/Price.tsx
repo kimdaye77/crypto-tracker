@@ -19,7 +19,14 @@ const PriceItem = styled.li`
     color: ${(props) => props.theme.accentColor};
   }
   display: flex;
+  flex: 1;
   justify-content: space-between;
+`;
+
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 `;
 
 const PriceTitle = styled.div`
@@ -27,8 +34,15 @@ const PriceTitle = styled.div`
   font-weight: bold;
 `;
 
-const PriceContent = styled.div`
-  font-size: 16px;
+const PriceContent = styled.div<{ $percent: boolean | undefined }>`
+  font-size: 18px;
+  font-weight: bold;
+  color: ${(props) =>
+    props.$percent === undefined
+      ? props.theme.textColor
+      : props.$percent
+      ? "#f24571"
+      : "#0084ce"};
 `;
 
 const ItemWrapper = styled.div`
@@ -53,12 +67,12 @@ function Price() {
     () => fetchCoinTickers(coinId!)
   );
 
-  const createPriceItem = (title: string, value: string) => {
+  const createPriceItem = (title: string, value: string, percent?: boolean) => {
     if (tickersData) {
       return (
         <ItemWrapper key={title}>
           <PriceTitle>{title}</PriceTitle>
-          <PriceContent>{value}</PriceContent>
+          <PriceContent $percent={percent}>{value}</PriceContent>
         </ItemWrapper>
       );
     }
@@ -68,21 +82,23 @@ function Price() {
   const usd_t = usd as { [key: string]: any };
   return (
     <>
-      {tickersData && (
+      {!tickersLoading && tickersData && (
         <>
           <PriceList>
-            <PriceItem>
-              {createPriceItem(
-                "Ath Price",
-                `$${tickersData.quotes?.USD.ath_price.toFixed(0)}`
-              )}
-            </PriceItem>
-            <PriceItem>
-              {createPriceItem(
-                "Current Price",
-                `$${tickersData.quotes?.USD.price.toFixed(0)}`
-              )}
-            </PriceItem>
+            <Row>
+              <PriceItem>
+                {createPriceItem(
+                  "Ath Price",
+                  `$${tickersData.quotes?.USD.ath_price.toFixed(0)}`
+                )}
+              </PriceItem>
+              <PriceItem>
+                {createPriceItem(
+                  "Current Price",
+                  `$${tickersData.quotes?.USD.price.toFixed(0)}`
+                )}
+              </PriceItem>
+            </Row>
           </PriceList>
 
           <PriceList>
@@ -91,7 +107,8 @@ function Price() {
                 const value = usd_t?.[`percent_change_${interval}`];
                 const valueComponent = createPriceItem(
                   `Percent Change ${interval}`,
-                  `${(value * 100).toFixed(0)}%`
+                  `${(value * 100).toFixed(0)}%`,
+                  value > 0
                 );
                 return (
                   <PriceItem key={interval}>
