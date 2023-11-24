@@ -35,6 +35,7 @@ const Coin = styled.li`
     a {
       color: ${(props) => props.theme.accentColor};
     }
+    background-color: ${(props) => props.theme.textColor};
   }
 `;
 const Title = styled.h1`
