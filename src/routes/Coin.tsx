@@ -97,7 +97,7 @@ interface InfoData {
   last_data_astring: string;
 }
 
-interface PriceData {
+export interface PriceData {
   id: string;
   name: string;
   symbol: string;
@@ -199,7 +199,7 @@ function Coin({}: ICoinProps) {
               <Link to="price">Price</Link>
             </Tab>
           </Tabs>
-          <Outlet />
+          <Outlet context={{ tickersData: tickersData }} />
         </>
       )}
     </Container>
