@@ -21,7 +21,7 @@ const Header = styled.header`
 const CoinList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
+  background-color: ${(props) => props.theme.boxColor};
   color: ${(props) => props.theme.textColor};
   margin-bottom: 10px;
   border-radius: 15px;
@@ -39,6 +39,7 @@ const Coin = styled.li`
 `;
 const Title = styled.h1`
   font-size: 48px;
+  font-weight: bold;
   color: ${(props) => props.theme.accentColor};
 `;
 
