@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Coins from "./routes/Coins";
 import Coin from "./routes/Coin";
 import Chart from "./routes/Chart";
@@ -6,19 +6,6 @@ import Price from "./routes/Price";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "./atoms";
 import { styled } from "styled-components";
-import { keyframes } from "styled-components";
-
-const slideAnimation = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-50px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,20 +14,26 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const ToggleWrapper = styled.div`
+const Menu = styled.div`
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: space-around;
+  margin: 20px 0px 0px 0px;
+  button {
+    border: 0px;
+    background-color: transparent;
+    font-size: 28px;
+    cursor: pointer;
+  }
 `;
 
-const ToggleBtn = styled.button<{ $isDark: boolean }>`
-  border: 0px;
-  background-color: transparent;
-  margin: 20px;
-  font-size: 28px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+const HomeBtn = styled.button`
+  margin: 4px 0;
+  font-size: 15px;
+  padding: 4px 0px;
 `;
+
+const ToggleBtn = styled.button``;
 interface IRouterProps {}
 
 function Router({}: IRouterProps) {
@@ -50,11 +43,13 @@ function Router({}: IRouterProps) {
 
   return (
     <Wrapper>
-      <ToggleWrapper onClick={toggleDarkAtom}>
-        <ToggleBtn $isDark={isDark}> {isDark ? "🌚" : "🌝"}</ToggleBtn>
-      </ToggleWrapper>
-
       <BrowserRouter basename="/crypto-tracker">
+        <Menu>
+          <HomeBtn>
+            <Link to="/">🏠</Link>
+          </HomeBtn>
+          <ToggleBtn onClick={toggleDarkAtom}>{isDark ? "🌚" : "🌝"}</ToggleBtn>
+        </Menu>
         <Routes>
           <Route path="/" element={<Coins />} />
           <Route path="/:coinId" element={<Coin />}>

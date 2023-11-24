@@ -24,12 +24,6 @@ const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
 `;
 
-const HomeBtn = styled.button`
-  margin: 4px 0;
-  font-size: 15px;
-  padding: 4px 0px;
-`;
-
 const Loader = styled.span`
   text-align: center;
   display: block;
@@ -163,9 +157,6 @@ function Coin({}: ICoinProps) {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
-        <HomeBtn>
-          <Link to="/">Home</Link>
-        </HomeBtn>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
