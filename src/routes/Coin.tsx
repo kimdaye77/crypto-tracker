@@ -143,10 +143,7 @@ function Coin({}: ICoinProps) {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId!),
-    {
-      refetchInterval: 5000,
-    }
+    () => fetchCoinTickers(coinId!)
   );
   const loading = infoLoading || tickersLoading;
   return (
@@ -199,7 +196,7 @@ function Coin({}: ICoinProps) {
               <Link to="price">Price</Link>
             </Tab>
           </Tabs>
-          <Outlet context={{ tickersData: tickersData }} />
+          <Outlet />
         </>
       )}
     </Container>
