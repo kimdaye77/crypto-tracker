@@ -16,7 +16,7 @@ const PriceItem = styled.li`
   border-radius: 15px;
   cursor: pointer;
   &:hover {
-    color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.accentColor};
   }
   display: flex;
   justify-content: space-between;

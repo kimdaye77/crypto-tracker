@@ -18,22 +18,39 @@ const Header = styled.header`
   flex-direction: column;
 `;
 
-const CoinList = styled.ul``;
+const CoinList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: space-between;
+  padding: 0;
+`;
 
+const Array = styled.span`
+  display: none;
+`;
 const Coin = styled.li`
+  width: 30%;
   background-color: ${(props) => props.theme.boxColor};
   color: ${(props) => props.theme.textColor};
   margin-bottom: 10px;
+  gap: 10px;
   border-radius: 15px;
+  font-weight: bold;
+  font-size: 20px;
   a {
     display: flex;
     align-items: center;
+    flex-direction: column;
     padding: 20px;
     transition: color 0.2s ease-in;
   }
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor};
+    }
+    ${Array} {
+      display: block;
     }
     background-color: ${(props) => props.theme.textColor};
   }
@@ -53,6 +70,10 @@ const Img = styled.img`
   width: 35px;
   height: 35px;
   margin: 10px;
+`;
+
+const CoinTitle = styled.div`
+  text-align: center;
 `;
 
 interface ICoinsProps {}
@@ -87,7 +108,11 @@ function Coins({}: ICoinsProps) {
                 <Img
                   src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />
-                {coin.name} &rarr;
+                <CoinTitle>
+                  {coin.name}
+                  <br />
+                  <Array> &rarr;</Array>
+                </CoinTitle>
               </Link>
             </Coin>
           ))}
